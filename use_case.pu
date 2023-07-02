@@ -1,0 +1,39 @@
+@startuml
+left to right direction
+
+:User:
+
+rectangle Oauth {
+	(Access Token 발급) as token
+	(Authorization Code Grant) as acg
+	(Authorization Code 검증) as acv
+	(Implicit Grant) as ig
+	(Password Credentials Grant) as pcg
+	(Username & Password 검증) as upv
+	(Client Credentials Grant) as ccg
+	(Client ID & Secret 검증) as csv
+	
+	(Application 관리) as app
+	(Client ID & Secret 생성) as cis1
+	(Client ID & Secret 삭제) as cis2
+	
+	token <. acg : <<extend>>
+	token <. ig : <<extend>>
+	token <. pcg : <<extend>>
+	token <. ccg : <<extend>>
+	
+	acg ..> csv : <<include>>
+	pcg ..> csv : <<include>>
+	ccg ..> csv : <<include>>
+	
+	acg ..> acv : <<include>>
+	pcg ..> upv : <<include>>
+	
+	app <. cis1 : <<extend>>
+	app <.. cis2 : <<extend>>
+}
+
+User ---> token
+User ---> app
+
+@enduml

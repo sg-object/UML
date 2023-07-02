@@ -1,0 +1,47 @@
+@startuml
+
+participant GW as GW
+participant Oauth
+
+== Authorization Code Grant ==
+autonumber 1 1
+GW -> Oauth : 로그인 요청
+note right
+	client_id, redirect_url, response_type = code
+end note
+GW <-- Oauth : 로그인 Page URL 전달
+GW -> Oauth : 로그인
+GW <-- Oauth : Authorization Code 발급
+GW -> Oauth : Access Token 요청
+note right
+	client_id, redirect_url, grant_type, code
+end note
+GW <-- Oauth : Access Token 발급
+
+== Implicit Grant ==
+autonumber 1 1
+GW -> Oauth : 로그인 요청
+note right
+	client_id, redirect_url, response_type = token
+end note
+GW <-- Oauth : 로그인 Page URL 전달
+GW -> Oauth : 로그인
+GW <-- Oauth : Access Token 발급
+
+== Password Credentials Grant ==
+autonumber 1 1
+GW -> Oauth : Access Token 요청
+note right
+	client_id, grant_type, username, password
+end note
+GW <-- Oauth : Access Token 발급
+
+== Client Credentials Grant ==
+autonumber 1 1
+GW -> Oauth : Access Token 요청
+note right
+	grant_type
+end note
+GW <-- Oauth : Access Token 발급
+
+@enduml
